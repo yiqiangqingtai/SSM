@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <display-name>dpm_curd</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <!--===================== 3.字符集编码格式过滤器（此过滤必须放在所有的过滤器之前） =====================-->
+  	<filter>
+  		<filter-name>CharacterEncoding</filter-name>
+  		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+  		<!-- 字符集编码格式为utf-8 -->
+  		<init-param>
+  			<param-name>encoding</param-name>
+  			<param-value>UTF-8</param-value>
+  		</init-param>
+  		<!-- 设置强制请求是否使用编码 -->
+  		<init-param>
+  			<param-name>forceRequestEncoding</param-name>
+  			<param-value>true</param-value>
+  		</init-param>
+  		<!-- 设置强制响应是否使用编码 -->
+  		<init-param>
+  			<param-name>forceResponseEncoding</param-name>
+  			<param-value>true</param-value>
+  		</init-param>
+  	</filter>
+  	<filter-mapping>
+  		<filter-name>CharacterEncoding</filter-name>
+  		<url-pattern>/*</url-pattern>
+  	</filter-mapping>
+  
+  
+  
+  
+  	<!--===================== 1.启动spring容器，加载spring的配置文件applicationContext.xml =====================-->
+  	
+  	<context-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>classpath:applicationContext.xml</param-value>
+  	</context-param>
+  	
+  	
+  	<listener>
+  		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  	</listener>
+  	
+  	
+  	
+  	<!--===================== 2.配置springmvc前端控制器，拦截所有的请求进行处理 =====================-->
+  	<servlet>
+  	
+  	
+  		<servlet-name>dispatcherServlet</servlet-name>
+  		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  		
+  		<!-- 不需要指定springmvc的配置文件路径：
+  			 1.根web.xml文件处于同级目录
+  			 2.创建的名字必须为：xxx-servlet.xml
+  		 -->
+  		
+  	<!--
+  		<init-param>
+  			初始化springmvc上下文配置的路径
+  			<param-name>contextConfigLocation</param-name>
+  			<param-value>file:src/main/webapp/WEB-INF/dispatcherServlet-servlet.xml</param-value>
+  		</init-param> 
+  	-->
+  		
+  		<load-on-startup>1</load-on-startup>
+  		
+  	</servlet>
+  	
+  	<servlet-mapping>
+  		<servlet-name>dispatcherServlet</servlet-name>
+  		<url-pattern>/</url-pattern>
+  	</servlet-mapping>
+  	
+  	
+  	
+  	<!--===================== 4.使用REST风格时URI请求(将页面普通的post请求转为指定的delete或者put请求) =====================-->
+  	<filter>
+  		<filter-name>HiddenHttpMethodFilter</filter-name>
+  		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+  	</filter>
+  	<filter-mapping>
+  		<filter-name>HiddenHttpMethodFilter</filter-name>
+  		<url-pattern>/*</url-pattern>
+  	</filter-mapping>
+  	<!-- 添加PUT请求的过滤器 -->
+  	<filter>
+  		<filter-name>HttpPutFormContentFilter</filter-name>
+  		<filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>
+  	</filter>
+  	<filter-mapping>
+  		<filter-name>HttpPutFormContentFilter</filter-name>
+  		<url-pattern>/*</url-pattern>
+  	</filter-mapping>
+</web-app>

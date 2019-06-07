@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+ <!-- 配置文件 -->
+ <configuration>		
+ 	<!-- 开启驼峰命名 -->
+ 	<settings>
+ 		<setting name="mapUnderscoreToCamelCase" value="true"/>
+ 	</settings>
+ 
+ 	<!-- 全局类别名 -->
+	<typeAliases>
+		<package name="com.yuntu.dpm.bean"/>
+	</typeAliases>
+	<!-- 将下面的操作配置全部交给spring进行整合 -->
+	<!-- 数据源  -->
+	<!-- sqlsession相关的实例化 -->
+	<!-- mapper.xml文件的引入 -->
+
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+	</plugins>
+
+
+ </configuration>
